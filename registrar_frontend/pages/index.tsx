@@ -170,7 +170,7 @@ const Home: NextPage = () => {
             </p>
           )}
 
-          {isConnected && (
+          
             <Button
               size="large"
               variant="contained"
@@ -181,7 +181,7 @@ const Home: NextPage = () => {
             >
               {!reserveLoading && !reserveStarted && 'Search'}
             </Button>
-          )}
+          
 
           {owned==0 && isConnected && !isMinted &&(
             <Button
