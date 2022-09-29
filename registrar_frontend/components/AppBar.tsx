@@ -20,6 +20,7 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 const pages = [
   { name: "Mint", url: "/" },
+  { name: "Transfer", url: "/transfer" },
   { name: "History", url: "/history" },
 ];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];

@@ -166,6 +166,45 @@ a { color: inherit }
 }
 
 
+.transfercontainer {
+  display: flex;
+  flex-wrap: wrap;
+  width: 95%;
+  padding: 30px 30px;
+  background-color: rgb(47, 47, 48);
+  border-radius: 20px;
+  border: solid white 1px;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4.5rem !important;
+  
+}
+
+.transfermobile2 {
+  width: 100%;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  //border: solid blue 2px;
+  text-align: center;
+  padding: 0 !important;
+  margin: 0 !important;
+  padding-bottom: 10px !important;
+  
+  //flex-wrap: wrap;
+}
+
+.transfermobile {
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+  //border: solid red 2px;
+  display: flex;
+
+}
+
+
 @media (max-width: 700px ) {
   .page {
     width: 100% !important;

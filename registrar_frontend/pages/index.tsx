@@ -179,7 +179,7 @@ const Home: NextPage = () => {
               className="white search"
               onClick={handleClick}
             >
-              {!reserveLoading && !reserveStarted && 'Search'}
+              Search
             </Button>
           
 
