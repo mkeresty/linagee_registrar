@@ -46,7 +46,7 @@ const Whitepaper: NextPage = () => {
         <p className="para">
             I cannot confirm the safety of this contract. This website is in no way financial advice, nor am I responsible for anything that could happen. Use at your own risk, and always use a burner wallet.<br/>
             <br/>
-            The source code for this website can be found on my <a href="https://github.com/mkeresty/linageeregistrar" target="_blank" rel="noopener noreferrer">github.</a>
+            The source code for this website can be found on my <a href="https://github.com/mkeresty/linagee_registrar" target="_blank" rel="noopener noreferrer">github.</a>
         </p>
         <span/>
         <h2 className="para">
