@@ -24,7 +24,7 @@ const Whitepaper: NextPage = () => {
         <span/>
       <h1>About</h1>
         <p className="para">
-          This registrar allows users to claim names by using the 'reserve(__name(bytes32))' function. One of these names can then be set as your primary name using the 'setAddress(__name(boolean), __a(address), __primary(boolean))' function, which the contract will resolve to your address. There are also read functions that allow one to see the resolved name associated with an address,
+          This registrar allows users to claim names by using the reserve(__name(bytes32)) function. One of these names can then be set as your primary name using the setAddress(__name(boolean), __a(address), __primary(boolean)) function, which the contract will resolve to your address. There are also read functions that allow one to see the resolved name associated with an address,
           and the address that owns a particular name.<br/>
           <br/>
           Additionally this contract allows users to set sub-names and contents associated with their names.
