@@ -1,0 +1,244 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: SFRounded, ui-rounded, "SF Pro Rounded", -apple-system, "system-ui", "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  max-width: 700px;
+  margin: 0 auto;
+  
+}
+
+.header {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  height: fit-content;
+  z-index: 20000 !important;
+}
+
+.footer {
+  width: fit-content;
+  position: fixed;
+  padding: 1rem;
+  border-radius: 4px;
+  color: white;
+  background-color: rgb(47, 47, 48);
+  border: solid white 1px;
+  bottom: 9px;
+  font-size: x-small;
+  display: flex;
+  margin: 0 auto;
+  align-content: center;
+  justify-content: center;
+  height: fit-content;
+  z-index: 20000 !important;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+
+  right: 50%;
+  transform: translate(50%,0%);
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 30px 30px;
+  background-color: rgb(47, 47, 48);
+  border-radius: 20px;
+  border: solid white 1px;
+  color: white;
+}
+
+.button {
+  align-items: center;
+  color: white;
+  transition: all ease 100ms;
+}
+
+button:not(:disabled):hover {
+  transform: scale(1.04)
+}
+
+button[data-mint-loading="true"] {
+  background: rgba(22, 25, 31, 0.24);
+}
+
+button[data-mint-started="true"] {
+  background-image: linear-gradient(270deg, #FF6257, #FF5CA0);
+  position: relative;
+}
+
+  button[data-mint-started="true"]::after {
+    animation-name: pulse;
+    animation-duration: 500ms;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    background-color: #FF6257;
+    border-radius: inherit;
+    bottom: 0;
+    content: ' ';
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+button[data-mint-done="true"] {
+   opacity: 0;
+   transform: scale(0.85);
+}
+
+h1 { font-size: 24px; }
+h2 { font-size: 18px; }
+a { color: inherit }
+
+@keyframes pulse {
+  0% { opacity: 0 }
+  100% { opacity: '100%' }
+}
+
+.provider {
+  background-color: #1d1d1d;
+}
+
+.pad-bottom {
+  margin-bottom: 1rem;
+}
+
+.pad-bottom15x {
+  margin-bottom: 1.5rem;
+}
+
+.pad-top {
+  margin-top: 1rem;
+}
+
+.pad-top5 {
+  margin-top: 5rem;
+}
+
+.white {
+  color: white;
+
+}
+
+.gradient {
+  background-image: url("/gradient2.gif");
+  
+}
+
+.center-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.main-img {
+  border-radius: 8px;
+  height: 100%;
+  width: auto;
+}
+
+.search {
+  margin-right: 1rem;
+}
+
+.para {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+
+@media (max-width: 700px ) {
+  .page {
+    width: 100% !important;
+  }
+
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 95%;
+    padding: 30px 30px;
+    background-color: rgb(47, 47, 48);
+    border-radius: 20px;
+    border: solid white 1px;
+    color: white;
+    justify-content: center;
+    align-items: center;
+    margin-top: 4.5rem !important;
+    
+  }
+
+  .mobile2 {
+    width: 100%;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    //border: solid blue 2px;
+    text-align: center;
+    padding: 0 !important;
+    margin: 0 !important;
+    padding-bottom: 10px !important;
+    
+    //flex-wrap: wrap;
+  }
+
+  .mobile {
+    width: fit-content;
+    align-items: center;
+    justify-content: center;
+    //border: solid red 2px;
+    display: flex;
+
+  }
+
+.search {
+  margin-right: 0 !important;
+  
+}
+
+.footer {
+  padding: 1px !important;
+  min-width: 50% !important;
+  opacity: 70% !important;
+}
+
+.mobile-history {
+  width: 90% !important;
+  padding: 3px;
+}
+
+.mobile-page {
+  width: 100% !important;
+  padding: 5px !important;
+  margin: 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  //border: solid red 2px;
+}
+
+.paper {
+  width: 90%;
+  word-wrap: break-word
+}
+
+  
+}
