@@ -205,6 +205,20 @@ a { color: inherit }
 }
 
 
+.error-message {
+  animation: fadeOut 2s forwards;
+  animation-delay: 5s;
+  //background: red;
+  //color: white;
+  //padding: 10px;
+  //text-align: center;
+}
+
+@keyframes fadeOut {
+  from {opacity: 1;}
+  to {opacity: 0;}
+}
+
 @media (max-width: 700px ) {
   .page {
     width: 100% !important;
