@@ -402,6 +402,7 @@ const check = ()=>{
                 variant="contained"
                 color="success"
                 style={{ marginTop: 24, }}
+                disabled={createLoading || createStarted}
                 className="white button mobile-button"
                 onClick={() => createWrapper?.()}
               >
@@ -416,6 +417,7 @@ const check = ()=>{
                 size="large"
                 variant="contained"
                 color="success"
+                disabled={transferLoading || transferStarted}
                 style={{ marginTop: 24, }}
                 className="white button mobile-button"
                 onClick={() => transfer?.()}
@@ -426,11 +428,12 @@ const check = ()=>{
               </Button>
             )}
 
-            {isConnected && (!isWrapped || wrappedMap == 0) && (isTransferred || owned == 6) && (isCreated || createdWrapper == 1) &&(
+            {isConnected && (!isWrapped || wrappedMap == 0 ) && (isTransferred || owned == 6) && (isCreated || createdWrapper == 1) &&(
               <Button
                 size="large"
                 variant="contained"
                 color="success"
+                disabled={wrapLoading || wrapStarted}
                 style={{ marginTop: 24, }}
                 className="white button mobile-button"
                 onClick={() => check?.()}
