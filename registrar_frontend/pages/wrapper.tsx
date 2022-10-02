@@ -42,6 +42,7 @@ const Wrapper: NextPage = () => {
     const [createdWrapper, setCreatedWrapper] = React.useState(0);
     const [wrappedMap, setWrappedMap] = React.useState(0);
     const [currentOwner, setOwner] = React.useState<string>();
+    const[wrappedOwner, setWrappedOwner] = React.useState('');
   
     const { isConnected } = useAccount();
     const { address, isConnecting, isDisconnected } = useAccount();
@@ -79,6 +80,7 @@ const Wrapper: NextPage = () => {
       setOwnedBool(3);
       setCreatedWrapper(0);
       setWrappedMap(0);
+      setWrappedOwner('');
 
 
 
@@ -98,10 +100,13 @@ const Wrapper: NextPage = () => {
       console.log(wrapperAddress);
 
       const res4 = await refetch4();
-      console.log('bignumberdata');
       console.log(res4.data);
+      console.log('res4above');
+
+
       //console.log(res4.data?.BigNumber);
       //console.log((ethers.BigNumber.from(res4.data)).toNumber());
+
 
 
       if (typeof res3.data !== "undefined" && res3.data.toString() == wrapperAddress) {
@@ -120,7 +125,38 @@ const Wrapper: NextPage = () => {
 
         setWrappedMap((ethers.BigNumber.from(res4.data)).toNumber());
         //const isTransferred = true;
-        console.log('Wrapped!!');
+        console.log((ethers.BigNumber.from(res4.data)).toNumber());
+
+        const res6 = await refetch6();
+        console.log(res6.data);
+        console.log('res6abovezzz');
+
+        // const { refetch: refetch7 } = useContractRead({
+        //     ...wrapperConfig,
+        //     functionName: 'tokenOfOwnerByIndex',
+        //     args:[address, (ethers.BigNumber.from(res4.data)).toNumber()],
+        // });
+
+        // console.log(refetch7);
+        // console.log('refetch7 above');
+    
+        // const fetchrs6 = async ()=>{
+        //     console.log('wrappppedmap', wrappedMap);
+        //       const res6 = await refetch6();
+        //       console.log('r6data');
+        //       console.log(res6);
+        //       //console.log(res4.data?.BigNumber);
+        //       //console.log((ethers.BigNumber.from(res4.data)).toNumber());
+        
+        //       if (typeof res6.data !== "undefined" && res6.data.toString() == address) {
+        
+        //         setWrappedOwner(res6.data.toString());
+        //       };
+        //     }
+
+        //     fetchrs6();
+
+
       };
 
       if (typeof res2.data !== "undefined" && res2.data.toString() == address) {
@@ -169,6 +205,7 @@ const Wrapper: NextPage = () => {
       setOwnedBool(3);
       setCreatedWrapper(0);
       setWrappedMap(0);
+      setWrappedOwner('');
 
       if (typeof inputField !== "undefined" && inputField !== "") {
         const bytes = setBytes((ethers.utils.formatBytes32String(inputField)).toString());
@@ -317,14 +354,34 @@ const Wrapper: NextPage = () => {
                   //const isTransferred = true;
                   console.log('Wrapped!!');
                 };
-  
               }
               fetchrs4();
-              
 
 
             }
           }, [isWrapped]);
+
+
+
+          React.useEffect(() => {
+
+            if (wrappedMap !== 0){
+                const fetchrs6 = async ()=>{
+                    const res6 = await refetch6();
+                    console.log('r66666666', res6.data);
+        
+                        if (typeof address !== "undefined" && typeof res6.data !== "undefined" && res6.data.toString() == address) {
+        
+                            setWrappedOwner(address.toString());
+                        };
+                      }
+                fetchrs6();
+        
+            }
+
+        }, [wrappedMap]);
+
+
 
     //----------TRACK TRANSACTION UNWRAP--------------
     const {
@@ -359,13 +416,22 @@ const Wrapper: NextPage = () => {
 
     //-------------IS WRAPPED?----------------------------------------
 
-    const { refetch: refetch4 } = useContractRead({
+    const { refetch: refetch4 } =  useContractRead({
         ...wrapperConfig,
         functionName: 'nameToId',
         args:inputBytes,
     });
 
 
+
+    //----------WRAPPED OWNED?-------------
+    //tokenOfOwnerByIndex
+
+    const { refetch: refetch6 } = useContractRead({
+        ...wrapperConfig,
+        functionName: 'ownerOf',
+        args:wrappedMap,
+    });
 
 
 //-----------TESTING-----------------------
@@ -535,7 +601,7 @@ const unwrapcheck = ()=>{
               </Button>
             )}
 
-        {isConnected && wrappedMap !== 0 &&(
+        {isConnected && wrappedMap !== 0 && wrappedOwner == address &&(
               <Button
                 size="large"
                 variant="contained"
@@ -571,7 +637,13 @@ const unwrapcheck = ()=>{
                 <h1 >{inputField} wrapped!</h1>
                 <p >
                   View on{' '}
-                  <a href={`https://etherscan.io/tx/${transferData?.hash}`} target="_blank" rel="noopener noreferrer">
+                  <a href={'https://opensea.io/collection/linageenamewrapper'} target="_blank" rel="noopener noreferrer">
+                    Opensea
+                  </a>
+                </p>
+                <p >
+                  View on{' '}
+                  <a href={`https://etherscan.io/tx/${wr2Data?.hash}`} target="_blank" rel="noopener noreferrer">
                     Etherscan
                   </a>
                 </p>
