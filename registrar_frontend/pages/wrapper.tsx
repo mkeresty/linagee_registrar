@@ -32,7 +32,7 @@ import Stack from '@mui/material/Stack';
 
 const Wrapper: NextPage = () => {
 
-    const wrapperAddress = "0x2fFbbF64803ECAb10B71950c1cBc042f901f63f3";
+    const wrapperAddress = "0x0A8623c603D16f43595622A66eC1bAD60efa6E83";
 
 
     const [inputField, setField] = React.useState<string>('Name');
@@ -55,7 +55,7 @@ const Wrapper: NextPage = () => {
     console.log(account);
 
     const wrapperConfig = {
-        addressOrName: '0x2fFbbF64803ECAb10B71950c1cBc042f901f63f3',
+        addressOrName: '0x0A8623c603D16f43595622A66eC1bAD60efa6E83',
         contractInterface: wrapperInterface,
       };
     
@@ -215,7 +215,7 @@ const Wrapper: NextPage = () => {
 
 //---------------WRAP-------------------------------------
     const { config: wrapConfig2 } = usePrepareContractWrite({
-        addressOrName: '0x2fFbbF64803ECAb10B71950c1cBc042f901f63f3',
+        addressOrName: '0x0A8623c603D16f43595622A66eC1bAD60efa6E83',
         contractInterface: wrapperInterface,
         functionName: 'wrap',
         args:inputBytes,
@@ -235,7 +235,7 @@ const Wrapper: NextPage = () => {
 //---------OTHER WRAP-----------
     const{data: wr2Data, write: contractWrap, isLoading: wr2Loading, isSuccess: wr2Started, error: wr2Error}  = useContractWrite({
         mode: 'recklesslyUnprepared',
-        addressOrName: '0x2fFbbF64803ECAb10B71950c1cBc042f901f63f3',
+        addressOrName: '0x0A8623c603D16f43595622A66eC1bAD60efa6E83',
         contractInterface: wrapperInterface,
         functionName: 'wrap',
         args:inputBytes,
@@ -245,7 +245,7 @@ const Wrapper: NextPage = () => {
     //-----------UNWRAP-------------------------
     const{data: uwr2Data, write: contractUnwrap, isLoading: uwr2Loading, isSuccess: uwr2Started, error: uwr2Error}  = useContractWrite({
         mode: 'recklesslyUnprepared',
-        addressOrName: '0x2fFbbF64803ECAb10B71950c1cBc042f901f63f3',
+        addressOrName: '0x0A8623c603D16f43595622A66eC1bAD60efa6E83',
         contractInterface: wrapperInterface,
         functionName: 'unwrap',
         args:wrappedMap,
@@ -546,7 +546,7 @@ const unwrapcheck = ()=>{
                 onClick={() => unwrapcheck()}
               >
                 {uwr2Loading && 'Pending...'}
-                {uwr2Started && 'Wrapping...'}
+                {uwr2Started && 'Unwrapping...'}
                 {!uwr2Loading && !uwr2Started && 'Unrap'}
               </Button>
             )}
@@ -558,14 +558,14 @@ const unwrapcheck = ()=>{
   
         <div style={{ flex: '0 0 auto' }}>
           <FlipCard>
-            <FrontCard isCardFlipped={isWrapped || wrappedMap !== 0}>
+            <FrontCard isCardFlipped={(isWrapped || wrappedMap !== 0) && !uwr2Loading}>
               
             <div className="main-img gradient center-content" style={{ padding: 24 }}>
             <h1>{inputField}</h1>
             </div>
               
             </FrontCard>
-            <BackCard isCardFlipped={isWrapped || wrappedMap !== 0}>
+            <BackCard isCardFlipped={(isWrapped || wrappedMap !== 0) && !uwr2Loading}>
               <div className="main-img gradient center-content" style={{ padding: 24 }}>
                 <Stack spacing={2}>
                 <h1 >{inputField} wrapped!</h1>
