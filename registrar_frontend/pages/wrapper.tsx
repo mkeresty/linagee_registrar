@@ -32,7 +32,7 @@ import Stack from '@mui/material/Stack';
 
 const Wrapper: NextPage = () => {
 
-    const wrapperAddress = "0x0A8623c603D16f43595622A66eC1bAD60efa6E83";
+    const wrapperAddress = "0x2Cc8342d7c8BFf5A213eb2cdE39DE9a59b3461A7";
 
 
     const [inputField, setField] = React.useState<string>('Name');
@@ -480,7 +480,7 @@ const unwrapcheck = ()=>{
       <div className="transfercontainer">
         <div className="transfermobile" style={{ flex: '1 1 auto', display: 'column' }}>
           <div className="transfermobile2" style={{ padding: '24px 24px 24px 0' }}>
-            <h2 className="pad-bottom15x">Wrap a name</h2>
+            <h2 className="pad-bottom15x">Wrap or Unwrap a name</h2>
             {/* {(!isCreated || createdWrapper !== 1) && (!isTransferred || owned !==6) && (!isWrapped || createdWrapper !==1 )  &&( */}
             <TextField 
                 sx={{ input: { color: 'white' } }} 
