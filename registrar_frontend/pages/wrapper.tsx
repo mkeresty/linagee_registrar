@@ -32,16 +32,15 @@ import Stack from '@mui/material/Stack';
 
 const Wrapper: NextPage = () => {
 
-    const wrapperAddress = "0x67EF79316E02F54598A1aC3Bb28377c83C9dD253";
-    const PRICE = 0;
-
+    const wrapperAddress = "0x2fFbbF64803ECAb10B71950c1cBc042f901f63f3";
 
 
     const [inputField, setField] = React.useState<string>('Name');
     const [addressField, setAddressField] = React.useState<string>();
     const [inputBytes, setBytes] = React.useState<string>();
     const [owned, setOwnedBool] = React.useState(3);
-  
+    const [createdWrapper, setCreatedWrapper] = React.useState(0);
+    const [wrappedMap, setWrappedMap] = React.useState(0);
     const [currentOwner, setOwner] = React.useState<string>();
   
     const { isConnected } = useAccount();
@@ -56,7 +55,7 @@ const Wrapper: NextPage = () => {
     console.log(account);
 
     const wrapperConfig = {
-        addressOrName: '0x67EF79316E02F54598A1aC3Bb28377c83C9dD253',
+        addressOrName: '0x2fFbbF64803ECAb10B71950c1cBc042f901f63f3',
         contractInterface: wrapperInterface,
       };
     
@@ -78,28 +77,87 @@ const Wrapper: NextPage = () => {
     const handleClick = async () => {
   
       setOwnedBool(3);
+      setCreatedWrapper(0);
+      setWrappedMap(0);
+
+
+
+
       console.log("clicked");
       const res = await refetch();
       console.log(`owner is:`, res.data);
       console.log(typeof res.data)
 
+      const res2 = await refetch2();
+      console.log('is wrapper created?')
+      console.log(res2.data);
+
+      const res3 = await refetch3();
+      console.log('is name transferred?')
+      //console.log(res3.data.toString());
+      console.log(wrapperAddress);
+
+      const res4 = await refetch4();
+      console.log('bignumberdata');
+      console.log(res4.data);
+      //console.log(res4.data?.BigNumber);
+      //console.log((ethers.BigNumber.from(res4.data)).toNumber());
+
+
+      if (typeof res3.data !== "undefined" && res3.data.toString() == wrapperAddress) {
+        //setOwner(res.data.toString());
+        setOwnedBool(6);
+        //setWrapperQueue(1);
+        //const isTransferred = true;
+        console.log('Wrapper owns');
+      };
+
+      if (typeof res4.data !== "undefined" && (ethers.BigNumber.from(res4.data)).toNumber() !== 0) {
+
+        console.log('is name wrapped?')
+        console.log(res4.data._hex);
+
+
+        setWrappedMap(1);
+        //const isTransferred = true;
+        console.log('Wrapped!!');
+      };
+
+      if (typeof res2.data !== "undefined" && res2.data.toString() == address) {
+        //setOwner(res.data.toString());
+        //setOwnedBool(5);
+        setCreatedWrapper(1);
+        //const isCreated = true;
+        console.log('Wrapper Created');
+      };
+  
+
       if (typeof res.data !== "undefined" && res.data.toString() !== address && res.data.toString() == "0x0000000000000000000000000000000000000000") {
         setOwner(res.data.toString());
         setOwnedBool(4);
         console.log('Not owned');
-      }
+      };
   
-      if (typeof res.data !== "undefined" && res.data.toString() !== address && res.data.toString() !== "0x0000000000000000000000000000000000000000") {
+      if (typeof res.data !== "undefined" && res.data.toString() !== wrapperAddress && res.data.toString() !== address && res.data.toString() !== "0x0000000000000000000000000000000000000000") {
         setOwner(res.data.toString());
         setOwnedBool(1);
         console.log('Not available');
-      }
+      };
       if (typeof res.data !== "undefined" && res.data.toString() == address) {
         setOwnedBool(0);
         console.log('Available!');
 
         //createWrapper?.();
-      }
+      };
+
+      console.log('checking..........')
+
+      console.log('hm2', isConnected , !isWrapped , wrappedMap == 0 , (isTransferred || owned == 6) , (isCreated || createdWrapper == 1));
+
+      console.log('ownedbool');
+      console.log(owned);
+
+      console.log('isTransferred', isTransferred)
   
     }
   
@@ -107,6 +165,11 @@ const Wrapper: NextPage = () => {
   
     React.useEffect(() => {
       console.log('input : ', inputField);
+
+      setOwnedBool(3);
+      setCreatedWrapper(0);
+      setWrappedMap(0);
+
       if (typeof inputField !== "undefined" && inputField !== "") {
         const bytes = setBytes((ethers.utils.formatBytes32String(inputField)).toString());
         console.log(bytes);
@@ -155,10 +218,6 @@ const Wrapper: NextPage = () => {
             ...wrapperConfig,
             functionName: 'wrap',
             args:inputBytes,
-            overrides: {
-                from: address,
-                value: ethers.utils.parseEther(((PRICE).toFixed(6)).toString()),
-              },
           });
         
         
@@ -170,7 +229,7 @@ const Wrapper: NextPage = () => {
             error: wrapError,
           } = useContractWrite(wrapConfig);
 
-          console.log(wrapError);
+          //console.log(wrapError);
         
          
    
@@ -220,11 +279,50 @@ const Wrapper: NextPage = () => {
 
         console.log(isConnected, !isWrapped, isTransferred, isCreated, owned );
 
+
+    //----------WRAPPER CREATED?-------------------
+
+    const { refetch: refetch2 } = useContractRead({
+        ...wrapperConfig,
+        functionName: 'waitForWrap',
+        args:inputBytes,
+    });
+
+
+
+    //-------------TRANSFERRED TO WRAPPER?----------
+
+    const { refetch: refetch3 } = useContractRead({
+        ...contractConfig,
+        functionName: 'owner',
+        args:inputBytes,
+    });
+
+    //-------------IS WRAPPED?----------------------------------------
+
+    const { refetch: refetch4 } = useContractRead({
+        ...wrapperConfig,
+        functionName: 'nameToId',
+        args:inputBytes,
+    });
+
+//-------------CLEAR INPUTS---------------------
+
+const clearInputs = () =>{
+    setOwnedBool(3);
+    setCreatedWrapper(0);
+    setWrappedMap(0);
+
+}
+
+
+
 //-----------TESTING-----------------------
 
 const check = ()=>{
     console.log('wrapper clicked');
-    console.log('hm', isConnected, !isWrapped, isTransferred, isCreated, owned );
+    const hm = {}
+    console.log('hm', isConnected , !isWrapped , wrappedMap == 0 , (isTransferred || owned == 6) , (isCreated || createdWrapper == 1));
     wrap?.();
     console.log(wrapData ,wrapLoading, wrapStarted, wrapError);
 
@@ -240,11 +338,10 @@ const check = ()=>{
         <div className="transfermobile" style={{ flex: '1 1 auto', display: 'column' }}>
           <div className="transfermobile2" style={{ padding: '24px 24px 24px 0' }}>
             <h2 className="pad-bottom15x">Wrap a name</h2>
-            {!isCreated && !isTransferred && !isWrapped && owned !== 0 &&(
+            {(!isCreated || createdWrapper !== 1) && (!isTransferred || owned !==6) && (!isWrapped || createdWrapper !==1 )  &&(
             <TextField 
                 sx={{ input: { color: 'white' } }} 
                 className="white" 
-                 
                 id="outlined-basic" 
                 label="Name" 
                 variant="outlined"
@@ -299,7 +396,7 @@ const check = ()=>{
             )}
  
   
-            {isConnected && !isCreated && owned == 0 &&(
+            {isConnected && !isCreated && owned == 0 && createdWrapper !== 1 &&(
               <Button
                 size="large"
                 variant="contained"
@@ -314,7 +411,7 @@ const check = ()=>{
               </Button>
             )}
 
-            {isConnected && !isTransferred && isCreated && owned == 0 &&(
+            {isConnected && !isTransferred && (isCreated || createdWrapper == 1) && owned == 0 &&(
               <Button
                 size="large"
                 variant="contained"
@@ -329,7 +426,7 @@ const check = ()=>{
               </Button>
             )}
 
-            {isConnected && !isWrapped && isTransferred && isCreated && owned == 0 &&(
+            {isConnected && (!isWrapped || wrappedMap == 0) && (isTransferred || owned == 6) && (isCreated || createdWrapper == 1) &&(
               <Button
                 size="large"
                 variant="contained"
@@ -349,14 +446,14 @@ const check = ()=>{
   
         <div style={{ flex: '0 0 auto' }}>
           <FlipCard>
-            <FrontCard isCardFlipped={isWrapped}>
+            <FrontCard isCardFlipped={isWrapped || wrappedMap == 1}>
               
             <div className="main-img gradient center-content" style={{ padding: 24 }}>
             <h1>{inputField}</h1>
             </div>
               
             </FrontCard>
-            <BackCard isCardFlipped={isWrapped}>
+            <BackCard isCardFlipped={isWrapped || wrappedMap == 1}>
               <div className="main-img gradient center-content" style={{ padding: 24 }}>
                 <Stack spacing={2}>
                 <h1 >{inputField} wrapped!</h1>
