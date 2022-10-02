@@ -478,9 +478,12 @@ const unwrapcheck = ()=>{
       
       <div className="page">
       <div className="transfercontainer">
+
+        
+      <h3 className="pad-bottom pad-top transfermobile2">Create wrapper → Transfer to Wrapper → Wrap</h3>
         <div className="transfermobile" style={{ flex: '1 1 auto', display: 'column' }}>
           <div className="transfermobile2" style={{ padding: '24px 24px 24px 0' }}>
-            <h2 className="pad-bottom15x">Wrap or Unwrap a name</h2>
+            <h4 className="pad-bottom15x">Wrap or Unwrap a name</h4>
             {/* {(!isCreated || createdWrapper !== 1) && (!isTransferred || owned !==6) && (!isWrapped || createdWrapper !==1 )  &&( */}
             <TextField 
                 sx={{ input: { color: 'white' } }} 
@@ -634,7 +637,7 @@ const unwrapcheck = ()=>{
             <BackCard isCardFlipped={(isWrapped || wrappedMap !== 0) && !uwr2Loading}>
               <div className="main-img gradient center-content" style={{ padding: 24 }}>
                 <Stack spacing={2}>
-                <h1 >{inputField} wrapped!</h1>
+                <h1 >{inputField}</h1>
                 <p >
                   View on{' '}
                   <a href={'https://opensea.io/collection/linageenamewrapper'} target="_blank" rel="noopener noreferrer">
