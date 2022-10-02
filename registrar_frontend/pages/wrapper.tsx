@@ -214,23 +214,32 @@ const Wrapper: NextPage = () => {
   
 
 //---------------WRAP-------------------------------------
-        const { config: wrapConfig } = usePrepareContractWrite({
-            ...wrapperConfig,
-            functionName: 'wrap',
-            args:inputBytes,
-          });
-        
-        
-          const {
-            data: wrapData,
-            write: wrap,
-            isLoading: wrapLoading,
-            isSuccess: wrapStarted,
-            error: wrapError,
-          } = useContractWrite(wrapConfig);
+    const { config: wrapConfig2 } = usePrepareContractWrite({
+        addressOrName: '0x2fFbbF64803ECAb10B71950c1cBc042f901f63f3',
+        contractInterface: wrapperInterface,
+        functionName: 'wrap',
+        args:inputBytes,
+        });
+    
+    
+    const {
+        data: wrapData,
+        write: wrap,
+        isLoading: wrapLoading,
+        isSuccess: wrapStarted,
+        error: wrapError,
+        } = useContractWrite(wrapConfig2);
 
           //console.log(wrapError);
         
+//---------OTHER WRAP-----------
+    const{data: wr2Data, write: contractWrap, isLoading: wr2Loading, isSuccess: wr2Started, error: wr2Error}  = useContractWrite({
+        mode: 'recklesslyUnprepared',
+        addressOrName: '0x2fFbbF64803ECAb10B71950c1cBc042f901f63f3',
+        contractInterface: wrapperInterface,
+        functionName: 'wrap',
+        args:inputBytes,
+    })
          
    
   
@@ -268,7 +277,7 @@ const Wrapper: NextPage = () => {
         isSuccess: wrSuccess,
         error: wrError,
         } = useWaitForTransaction({
-        hash: wrapData?.hash,
+        hash: wr2Data?.hash,
         });
 
         const isWrapped = wrSuccess;
@@ -321,9 +330,21 @@ const clearInputs = () =>{
 
 const check = ()=>{
     console.log('wrapper clicked');
+    console.log(inputBytes)
     const hm = {}
     console.log('hm', isConnected , !isWrapped , wrappedMap == 0 , (isTransferred || owned == 6) , (isCreated || createdWrapper == 1));
-    wrap?.();
+
+    //const letsWrap = wrap?.();
+
+    console.log('type');
+    console.log(typeof contractWrap);
+
+    if (typeof contractWrap !== "undefined"){
+        contractWrap();
+    }
+
+    
+
     console.log(wrapData ,wrapLoading, wrapStarted, wrapError);
 
 }
@@ -343,6 +364,7 @@ const check = ()=>{
                 sx={{ input: { color: 'white' } }} 
                 className="white" 
                 id="outlined-basic" 
+                disabled={createLoading || createStarted || wrapLoading || wrapStarted}
                 label="Name" 
                 variant="outlined"
                 value={inputField} 
@@ -436,7 +458,7 @@ const check = ()=>{
                 disabled={wrapLoading || wrapStarted}
                 style={{ marginTop: 24, }}
                 className="white button mobile-button"
-                onClick={() => check?.()}
+                onClick={() => check()}
               >
                 {wrapLoading && 'Pending...'}
                 {wrapStarted && 'Wrapping...'}
