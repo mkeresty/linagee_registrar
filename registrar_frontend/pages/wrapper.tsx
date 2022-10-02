@@ -338,7 +338,7 @@ const check = ()=>{
         <div className="transfermobile" style={{ flex: '1 1 auto', display: 'column' }}>
           <div className="transfermobile2" style={{ padding: '24px 24px 24px 0' }}>
             <h2 className="pad-bottom15x">Wrap a name</h2>
-            {(!isCreated || createdWrapper !== 1) && (!isTransferred || owned !==6) && (!isWrapped || createdWrapper !==1 )  &&(
+            {/* {(!isCreated || createdWrapper !== 1) && (!isTransferred || owned !==6) && (!isWrapped || createdWrapper !==1 )  &&( */}
             <TextField 
                 sx={{ input: { color: 'white' } }} 
                 className="white" 
@@ -348,7 +348,7 @@ const check = ()=>{
                 value={inputField} 
                 onChange={(e) => setField(e.target.value)} 
             />
-            )}
+            {/* )} */}
             {owned==4 && (
               <p className="error-message" style={{ marginTop: 24, color: 'red' }}>
                  Not registered
@@ -382,7 +382,7 @@ const check = ()=>{
                 Error: {wrError.message}
               </p>
             )}
-            {owned !== 0 &&(
+            {owned !== 0 && owned !==6 &&(
             <Button
                 size="large"
                 variant="contained"
