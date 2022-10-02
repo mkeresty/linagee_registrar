@@ -56,7 +56,7 @@ const Wrapper: NextPage = () => {
     console.log(account);
 
     const wrapperConfig = {
-        addressOrName: '0x0A8623c603D16f43595622A66eC1bAD60efa6E83',
+        addressOrName: wrapperAddress,
         contractInterface: wrapperInterface,
       };
     
@@ -252,7 +252,7 @@ const Wrapper: NextPage = () => {
 
 //---------------WRAP-------------------------------------
     const { config: wrapConfig2 } = usePrepareContractWrite({
-        addressOrName: '0x0A8623c603D16f43595622A66eC1bAD60efa6E83',
+        addressOrName: wrapperAddress,
         contractInterface: wrapperInterface,
         functionName: 'wrap',
         args:inputBytes,
@@ -272,7 +272,7 @@ const Wrapper: NextPage = () => {
 //---------OTHER WRAP-----------
     const{data: wr2Data, write: contractWrap, isLoading: wr2Loading, isSuccess: wr2Started, error: wr2Error}  = useContractWrite({
         mode: 'recklesslyUnprepared',
-        addressOrName: '0x0A8623c603D16f43595622A66eC1bAD60efa6E83',
+        addressOrName: wrapperAddress,
         contractInterface: wrapperInterface,
         functionName: 'wrap',
         args:inputBytes,
@@ -282,7 +282,7 @@ const Wrapper: NextPage = () => {
     //-----------UNWRAP-------------------------
     const{data: uwr2Data, write: contractUnwrap, isLoading: uwr2Loading, isSuccess: uwr2Started, error: uwr2Error}  = useContractWrite({
         mode: 'recklesslyUnprepared',
-        addressOrName: '0x0A8623c603D16f43595622A66eC1bAD60efa6E83',
+        addressOrName: wrapperAddress,
         contractInterface: wrapperInterface,
         functionName: 'unwrap',
         args:wrappedMap,
