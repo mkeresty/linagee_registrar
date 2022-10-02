@@ -118,7 +118,7 @@ const Wrapper: NextPage = () => {
         console.log(res4.data._hex);
 
 
-        setWrappedMap(1);
+        setWrappedMap((ethers.BigNumber.from(res4.data)).toNumber());
         //const isTransferred = true;
         console.log('Wrapped!!');
       };
@@ -241,7 +241,15 @@ const Wrapper: NextPage = () => {
         args:inputBytes,
     })
          
-   
+
+    //-----------UNWRAP-------------------------
+    const{data: uwr2Data, write: contractUnwrap, isLoading: uwr2Loading, isSuccess: uwr2Started, error: uwr2Error}  = useContractWrite({
+        mode: 'recklesslyUnprepared',
+        addressOrName: '0x2fFbbF64803ECAb10B71950c1cBc042f901f63f3',
+        contractInterface: wrapperInterface,
+        functionName: 'unwrap',
+        args:wrappedMap,
+    })
   
       //----------TRACK TRANSACTION - CREATE------------------
   
@@ -289,6 +297,48 @@ const Wrapper: NextPage = () => {
         console.log(isConnected, !isWrapped, isTransferred, isCreated, owned );
 
 
+        React.useEffect(() => {
+      
+            if (isWrapped) {
+              //const bytes = setBytes((ethers.utils.formatBytes32String(inputField)).toString());
+              //console.log(bytes);
+              const fetchrs4 = async ()=>{
+                const res4 = await refetch4();
+
+                console.log('bignumberdata');
+
+                if (typeof res4.data !== "undefined" && (ethers.BigNumber.from(res4.data)).toNumber() !== 0) {
+  
+                  console.log('is name wrapped?')
+                  console.log(res4.data._hex);
+          
+          
+                  setWrappedMap((ethers.BigNumber.from(res4.data)).toNumber());
+                  //const isTransferred = true;
+                  console.log('Wrapped!!');
+                };
+  
+              }
+              fetchrs4();
+              
+
+
+            }
+          }, [isWrapped]);
+
+    //----------TRACK TRANSACTION UNWRAP--------------
+    const {
+        data: uwrData,
+        isSuccess: uwrSuccess,
+        error: uwrError,
+        } = useWaitForTransaction({
+        hash: uwr2Data?.hash,
+        });
+
+        const isUnwrapped = uwrSuccess;
+
+
+
     //----------WRAPPER CREATED?-------------------
 
     const { refetch: refetch2 } = useContractRead({
@@ -315,14 +365,6 @@ const Wrapper: NextPage = () => {
         args:inputBytes,
     });
 
-//-------------CLEAR INPUTS---------------------
-
-const clearInputs = () =>{
-    setOwnedBool(3);
-    setCreatedWrapper(0);
-    setWrappedMap(0);
-
-}
 
 
 
@@ -341,6 +383,20 @@ const check = ()=>{
 
     if (typeof contractWrap !== "undefined"){
         contractWrap();
+    }
+
+    
+
+    console.log(wrapData ,wrapLoading, wrapStarted, wrapError);
+
+}
+
+
+const unwrapcheck = ()=>{
+
+
+    if (typeof contractUnwrap !== "undefined"){
+        contractUnwrap();
     }
 
     
@@ -404,6 +460,19 @@ const check = ()=>{
                 Error: {wrError.message}
               </p>
             )}
+
+            {uwrError && (
+              <p style={{ marginTop: 24, color: '#FF6257' }}>
+                Error: {uwrError.message}
+              </p>
+            )}
+
+            {isUnwrapped && (
+                        <p style={{ marginTop: 24, color: '#9afa92' }}>
+                            Unwrapped!
+                        </p>
+            )}
+
             {owned !== 0 && owned !==6 &&(
             <Button
                 size="large"
@@ -455,30 +524,48 @@ const check = ()=>{
                 size="large"
                 variant="contained"
                 color="success"
-                disabled={wrapLoading || wrapStarted}
+                disabled={wr2Loading || wr2Started || isWrapped}
                 style={{ marginTop: 24, }}
                 className="white button mobile-button"
                 onClick={() => check()}
               >
-                {wrapLoading && 'Pending...'}
-                {wrapStarted && 'Wrapping...'}
-                {!wrapLoading && !wrapStarted && 'Wrap'}
+                {wr2Loading && 'Pending...'}
+                {wr2Started && 'Wrapping...'}
+                {!wr2Loading && !wr2Started && 'Wrap'}
               </Button>
             )}
+
+        {isConnected && wrappedMap !== 0 &&(
+              <Button
+                size="large"
+                variant="contained"
+                color="success"
+                disabled={uwr2Loading || uwr2Started || isUnwrapped}
+                style={{ marginTop: 24, }}
+                className="white button mobile-button"
+                onClick={() => unwrapcheck()}
+              >
+                {uwr2Loading && 'Pending...'}
+                {uwr2Started && 'Wrapping...'}
+                {!uwr2Loading && !uwr2Started && 'Unrap'}
+              </Button>
+            )}
+
+            
           </div>
         </div>
       
   
         <div style={{ flex: '0 0 auto' }}>
           <FlipCard>
-            <FrontCard isCardFlipped={isWrapped || wrappedMap == 1}>
+            <FrontCard isCardFlipped={isWrapped || wrappedMap !== 0}>
               
             <div className="main-img gradient center-content" style={{ padding: 24 }}>
             <h1>{inputField}</h1>
             </div>
               
             </FrontCard>
-            <BackCard isCardFlipped={isWrapped || wrappedMap == 1}>
+            <BackCard isCardFlipped={isWrapped || wrappedMap !== 0}>
               <div className="main-img gradient center-content" style={{ padding: 24 }}>
                 <Stack spacing={2}>
                 <h1 >{inputField} wrapped!</h1>
