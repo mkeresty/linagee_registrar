@@ -616,7 +616,7 @@ const unwrapcheck = ()=>{
               >
                 {uwr2Loading && 'Pending...'}
                 {uwr2Started && 'Unwrapping...'}
-                {!uwr2Loading && !uwr2Started && 'Unrap'}
+                {!uwr2Loading && !uwr2Started && 'Unwrap'}
               </Button>
             )}
 
