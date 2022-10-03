@@ -162,7 +162,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             <Component {...pageProps} />
 
             <div className="footer">
-              Made with ❤️ by Mason Keresty <br/> <a href="https://etherscan.io/address/0x3d0768da09ce77d25e2d998e6a7b6ed4b9116c2d" target="_blank" rel="noopener noreferrer">Consider donating to Linagee</a>
+              Made with ❤️ by Mason Keresty - <br/> <a href="https://etherscan.io/address/0x3d0768da09ce77d25e2d998e6a7b6ed4b9116c2d" target="_blank" rel="noopener noreferrer">Consider donating to Linagee</a>
             </div>
         </div>
       </ThemeProvider>
