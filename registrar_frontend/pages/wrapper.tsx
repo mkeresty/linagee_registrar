@@ -85,7 +85,7 @@ const Wrapper: NextPage = () => {
 
 
 
-      console.log("clicked");
+      //console.log("clicked");
       const res = await refetch();
       console.log(`owner is:`, res.data);
       console.log(typeof res.data)
@@ -119,17 +119,17 @@ const Wrapper: NextPage = () => {
 
       if (typeof res4.data !== "undefined" && (ethers.BigNumber.from(res4.data)).toNumber() !== 0) {
 
-        console.log('is name wrapped?')
-        console.log(res4.data._hex);
+        // console.log('is name wrapped?')
+        // console.log(res4.data._hex);
 
 
         setWrappedMap((ethers.BigNumber.from(res4.data)).toNumber());
         //const isTransferred = true;
-        console.log((ethers.BigNumber.from(res4.data)).toNumber());
+        //console.log((ethers.BigNumber.from(res4.data)).toNumber());
 
         const res6 = await refetch6();
-        console.log(res6.data);
-        console.log('res6abovezzz');
+        // console.log(res6.data);
+        // console.log('res6abovezzz');
 
         // const { refetch: refetch7 } = useContractRead({
         //     ...wrapperConfig,
@@ -186,14 +186,14 @@ const Wrapper: NextPage = () => {
         //createWrapper?.();
       };
 
-      console.log('checking..........')
+    //   console.log('checking..........')
 
-      console.log('hm2', isConnected , !isWrapped , wrappedMap == 0 , (isTransferred || owned == 6) , (isCreated || createdWrapper == 1));
+    //   console.log('hm2', isConnected , !isWrapped , wrappedMap == 0 , (isTransferred || owned == 6) , (isCreated || createdWrapper == 1));
 
-      console.log('ownedbool');
-      console.log(owned);
+    //   console.log('ownedbool');
+    //   console.log(owned);
 
-      console.log('isTransferred', isTransferred)
+    //   console.log('isTransferred', isTransferred)
   
     }
   
@@ -327,11 +327,11 @@ const Wrapper: NextPage = () => {
 
         const isWrapped = wrSuccess;
 
-        console.log('note');
+        // console.log('note');
 
-        console.log(inputBytes);
+        // console.log(inputBytes);
 
-        console.log(isConnected, !isWrapped, isTransferred, isCreated, owned );
+        // console.log(isConnected, !isWrapped, isTransferred, isCreated, owned );
 
 
         React.useEffect(() => {

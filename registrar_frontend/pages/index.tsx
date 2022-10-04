@@ -60,7 +60,12 @@ const Home: NextPage = () => {
     args:inputBytes,
   });
 
+  console.log('inputttt');
+  console.log(inputBytes);
+
   const handleClick = async () => {
+
+
 
     setOwnedBool(3);
     console.log("clicked");
@@ -86,7 +91,7 @@ const Home: NextPage = () => {
     console.log('input : ', inputField);
     if (typeof inputField !== "undefined" && inputField !== "") {
       const bytes = setBytes((ethers.utils.formatBytes32String(inputField)).toString());
-      console.log(bytes);
+
     }
   }, [inputField]);
 
