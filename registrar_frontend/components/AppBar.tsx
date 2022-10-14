@@ -66,8 +66,9 @@ const ResponsiveAppBar = () => {
               textDecoration: 'none',
             }}
           >
-            ETH REGISTRAR
+            <img width="50px" height="50px" src={'LNR_L_Icon_White.svg'} />
           </Typography>
+          
 
           <Box  sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton

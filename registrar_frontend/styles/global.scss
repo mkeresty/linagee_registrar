@@ -29,6 +29,8 @@ body {
   z-index: 20000 !important;
 }
 
+
+
 .footer {
   width: fit-content;
   position: fixed;
@@ -157,7 +159,7 @@ a { color: inherit }
 }
 
 .search {
-  margin-right: 5px !important;
+  margin-right: 10px !important;
 }
 
 .para {
@@ -238,6 +240,13 @@ a { color: inherit }
     margin-top: 4.5rem !important;
     
   }
+
+
+  .mobile-button2 {
+    margin-bottom: 5px;
+    margin-top: 15px !important;
+  }
+
 
   .mobile2 {
     width: 100%;

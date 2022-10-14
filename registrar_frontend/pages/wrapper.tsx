@@ -13,8 +13,6 @@ import contractInterface from '../contract-abi.json';
 import wrapperInterface from '../wrapper-abi.json';
 import FlipCard, { BackCard, FrontCard } from '../components/FlipCard';
 import { ethers } from 'ethers';
-import allowlistImport from '../utils/allowlist2.json'
-import { getLeafProof, checkAllowlisted, checkAllocation } from '../utils/merkle2';
 import dynamic from 'next/dynamic';
 import BasicModal from '../components/Modal';
 import TextField from '@mui/material/TextField';

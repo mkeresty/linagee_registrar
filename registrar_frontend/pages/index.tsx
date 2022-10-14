@@ -12,8 +12,6 @@ import {
 import contractInterface from '../contract-abi.json';
 import FlipCard, { BackCard, FrontCard } from '../components/FlipCard';
 import { ethers } from 'ethers';
-import allowlistImport from '../utils/allowlist2.json'
-import { getLeafProof, checkAllowlisted, checkAllocation } from '../utils/merkle2';
 import dynamic from 'next/dynamic';
 import BasicModal from '../components/Modal';
 import TextField from '@mui/material/TextField';
@@ -156,7 +154,7 @@ const Home: NextPage = () => {
           )}
           {owned==1 && (
             <p style={{ marginTop: 24, color: 'red' }}>
-              Uavailable, <a href={`https://etherscan.io/address/${currentOwner}`} target="_blank" rel="noopener noreferrer">owner</a>
+              Unavailable, <a href={`https://etherscan.io/address/${currentOwner}`} target="_blank" rel="noopener noreferrer">owner</a>
             </p>
           )}
           {owned==0 && (
@@ -182,7 +180,7 @@ const Home: NextPage = () => {
               variant="contained"
               color="secondary"
               style={{ marginTop: 24, }}
-              className="white search"
+              className="white search mobile-button"
               onClick={handleClick}
             >
               Search
@@ -195,7 +193,7 @@ const Home: NextPage = () => {
               variant="contained"
               color="success"
               style={{ marginTop: 24, }}
-              className="white button mobile-button"
+              className="white button mobile-button2"
               onClick={() => reserve?.()}
             >
               {reserveLoading && 'Pending...'}
