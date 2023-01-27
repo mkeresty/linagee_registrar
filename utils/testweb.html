@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+  <script src="scripts/lnr-ethers-0.1.0.js" type="application/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js" integrity="sha512-g2TeAWw5GPnX7z0Kn8nFbYfeHcvAu/tx6d6mrLe/90mkCxO+RcptyYpksUz35EO337F83bZwcmUyHiHamspkfg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    let provider = new ethers.providers.Web3Provider(window.ethereum);
+    let signer;
+
+    const lnrWebAbi = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"previousAdmin","type":"address"},{"indexed":false,"internalType":"address","name":"newAdmin","type":"address"}],"name":"AdminChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"beacon","type":"address"}],"name":"BeaconUpgraded","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint8","name":"version","type":"uint8"}],"name":"Initialized","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"bytes32","name":"assetHash","type":"bytes32"},{"indexed":false,"internalType":"string","name":"assetName","type":"string"}],"name":"NewAsset","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"bytes32","name":"domain","type":"bytes32"}],"name":"NewWebsite","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"implementation","type":"address"}],"name":"Upgraded","type":"event"},{"inputs":[],"name":"lnrResolverAddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"name":"lnrWebsites","outputs":[{"internalType":"bool","name":"derp","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"proxiableUUID","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newImplementation","type":"address"}],"name":"upgradeTo","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newImplementation","type":"address"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"upgradeToAndCall","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"initialize","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"_domain","type":"bytes32"}],"name":"getWebsite","outputs":[{"components":[{"internalType":"bool","name":"derp","type":"bool"},{"internalType":"string[]","name":"linkArray","type":"string[]"},{"internalType":"bytes32[]","name":"siteHashArray","type":"bytes32[]"}],"internalType":"structLNR_WEB_V0.Website","name":"","type":"tuple"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes32","name":"_domain","type":"bytes32"},{"internalType":"string[]","name":"_linkArray","type":"string[]"},{"internalType":"bytes32[]","name":"_siteHashArray","type":"bytes32[]"}],"name":"updateWebsite","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes32[]","name":"_assetHash","type":"bytes32[]"},{"internalType":"string[]","name":"_assetName","type":"string[]"},{"internalType":"string[]","name":"_assetType","type":"string[]"},{"internalType":"bytes[]","name":"_assetData","type":"bytes[]"},{"internalType":"bool[]","name":"_zip","type":"bool[]"}],"name":"uploadAssets","outputs":[],"stateMutability":"nonpayable","type":"function"}];
+    let lnrWebAddress = "0xeA367344Ed8DEb3DE732880b7EE8aDCa281935E0"; // local
+    let lnrWebContract;
+
+
+    async function connectWallet(){
+      await provider.send("eth_requestAccounts", []);
+      signer = provider.getSigner();
+      lnr = new LNR(ethers, signer);
+      lnrWebContract = new ethers.Contract(lnrWebAddress, lnrWebAbi, signer);
+      document.getElementById('eth_login_button').innerHTML = "" + (await signer.getAddress());
+    }
+
+    function compressData(uncompressed){
+      let tmpUncompressed = new TextEncoder().encode(uncompressed);
+      return pako.deflate(tmpUncompressed);
+    }
+
+    function decompressData(compressed){
+      let tmpCompressed = ethers.utils.arrayify(compressed);
+      let uncompressed = new TextDecoder().decode(pako.inflate(tmpCompressed));
+      return uncompressed;
+    }
+
+
+    async function uploadNewFile(){
+      let formData = new FormData(document.getElementById("uploadNewFileForm"));
+      let tmpNewFile = {
+        name: formData.get('fileName'),
+        type: formData.get('fileType'),
+        uncompressedData : formData.get('fileData')
+      }
+      tmpNewFile.compressedData = compressData(tmpNewFile.uncompressedData);
+      tmpNewFile.uncompressedKeccak256 = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(tmpNewFile.uncompressedData));
+
+      let upload = await lnrWebContract.uploadAssets( [tmpNewFile.uncompressedKeccak256],
+                                                      [tmpNewFile.name],
+                                                      [tmpNewFile.type],
+                                                      [tmpNewFile.compressedData],
+                                                      [true] );
+      console.log(tmpNewFile);
+      console.log(upload);
+
+    }
+
+    async function getDataFromChain(tmpTxHash, tmpDataHash){
+      let tx = await provider.getTransaction(tmpTxHash);
+      let input_data = '0x' + tx.data.slice(10);
+      let iface = new ethers.utils.Interface(lnrWebAbi);
+      let decodedData = iface.parseTransaction({ data: tx.data, value: tx.value });
+      let params = decodedData.args;
+      for(let i=0; i< params[0].length; i++){
+        if(params[0][i] === tmpDataHash)
+          return {
+            hash: params[0][i],
+            name: params[1][i],
+            type: params[2][i],
+            data: params[3][i],
+            zip: params[4][i]
+          }
+      }
+      return false;
+    }
+
+    async function downloadAssetData(){
+      let formData = new FormData(document.getElementById("downloadAssetDataForm"));
+      let tmpData = await getDataFromChain(formData.get('downloadTxHash'), formData.get('downloadDataHash'));
+      if(tmpData.zip){
+        tmpData.finalData = decompressData(tmpData.data);
+      }
+      else{
+        tmpData.finalData = tmpData.data;
+      }
+      console.log(tmpData);
+    }
+    //setup();
+
+  </script>
+</head>
+<body>
+  <div>
+      <div class="container">
+        <main class="main-content">
+          <section class="topic">
+            <button id="eth_login_button" type="button" class="nes-btn" style="margin-bottom:1em" onclick="connectWallet()">Connect Wallet</button>
+          </section>
+
+          <section id="web3_content" class="topic">
+            <section class="topic">
+              <form id="uploadNewFileForm" action="javascript:uploadNewFile()">
+                <label for="fileName">File Name</label><br>
+                <input type="text" id="fileName" name="fileName" placeholder="test.html"><br>
+                <label for="fileType">File Type:</label><br>
+                <input type="text" id="fileType" name="fileType" placeholder="html"><br><br>
+                <label for="fileType">File Data:</label><br>
+                <input type="text" id="fileData" name="fileData" placeholder="<html>derp</html>"><br><br>
+                <input type="submit" value="Upload">
+              </form>
+              <hr>
+              <form id="downloadAssetDataForm" action="javascript:downloadAssetData()">
+                <label for="downloadTxHash">Tx Hash</label><br>
+                <input type="text" id="downloadTxHash" name="downloadTxHash" placeholder="0x..."><br>
+                <label for="downloadDataHash">data hash</label><br>
+                <input type="text" id="downloadDataHash" name="downloadDataHash" placeholder="0x..."><br><br>
+                <input type="submit" value="Download">
+              </form>
+
+            </section>
+        </section>
+        </main>
+        <footer>
+          <p>
+            <a href="https://twitter.com/0xDerpNation" target="_blank" rel="noopener">@0xDerpNation</a>
+          </p>
+        </footer>
+</body>
+</html>
