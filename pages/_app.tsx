@@ -76,13 +76,13 @@ const theme = createTheme({
           contrastText: "#ffffff",
       },
       secondary: {
-          main: "#dabaee",
+          main: "#ffffff",
           contrastText: "#ffffff",
       },
       success: {
         main: "#9afa92",
         contrastText: "ffffff"
-      },
+      }
   },
 });
 

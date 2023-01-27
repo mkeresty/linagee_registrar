@@ -24,7 +24,7 @@
     "**/*.ts",
     "**/*.tsx",
     "utils/playground.js"
-  ],
+, "utils/lnrtools.js"  ],
   "exclude": [
     "node_modules"
   ]
