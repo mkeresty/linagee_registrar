@@ -51,8 +51,6 @@ const Home: NextPage = () => {
   const { data: signer, isError, isLoading } = useSigner()
 
 
-
-
   //console.log(account);
 
   const contractConfig = {
@@ -94,10 +92,10 @@ const Home: NextPage = () => {
 
   const checkNormalized = (name: string) =>{
 
-    if(!signer){
-      return
-    }
-    var lnr = new LNR(ethers, signer);
+    // if(!signer){
+    //   return
+    // }
+    var lnr = new LNR(ethers, provider);
 
       try{
           var norm = lnr.isNormalizedBytes(name)
@@ -115,11 +113,22 @@ const Home: NextPage = () => {
   }
 
   const newBytes = (name: string) =>{
-    if(!signer){
-      return
+    // if(!signer){
+    //   return
+    // }
+    var lnr = new LNR(ethers, provider);
+    var bytes = "false"
+
+    try{
+      var bytes = lnr.stringToBytes32(name)
     }
-    var lnr = new LNR(ethers, signer);
-    return(lnr.stringToBytes32(name))
+    catch(e){
+      setField("")
+
+    }
+
+
+    return(bytes)
   }
 
   //----------STRING TO BYTES32------------------
@@ -129,10 +138,14 @@ const Home: NextPage = () => {
     //console.log('input : ', inputField);
     if (typeof inputField !== "undefined" && inputField !== "") {
       const bytes = newBytes(inputField.toString())
-      setBytes(bytes)
-      const isNorm = checkNormalized(bytes)
-      //console.log("is norm", isNorm)
-      setNorm(isNorm)
+      if(bytes !== "false"){
+        setBytes(bytes)
+        const isNorm = checkNormalized(bytes)
+        //console.log("is norm", isNorm)
+        setNorm(isNorm)
+
+      }
+
 
     }
   }, [inputField]);
