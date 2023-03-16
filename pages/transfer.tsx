@@ -45,11 +45,11 @@ const TransferPage: NextPage = () => {
 
     const account = useAccount({
       onConnect({ address, connector, isReconnected }) {
-        console.log('Connected', { address, connector, isReconnected })
+        //console.log('Connected', { address, connector, isReconnected })
       },
     });
   
-    console.log(account);
+    //console.log(account);
   
     const contractConfig = {
       addressOrName: '0x5564886ca2C518d1964E5FCea4f423b41Db9F561',
@@ -68,18 +68,18 @@ const TransferPage: NextPage = () => {
     const handleClick = async () => {
   
       setOwnedBool(3);
-      console.log("clicked");
+      //console.log("clicked");
       const res = await refetch();
-      console.log(`owner is:`, res.data);
+      //console.log(`owner is:`, res.data);
   
       if (typeof res.data !== "undefined" && res.data.toString() !== "0x0000000000000000000000000000000000000000") {
         setOwner(res.data.toString());
         setOwnedBool(1);
-        console.log('Not available');
+        //console.log('Not available');
       }
       if (typeof res.data !== "undefined" && res.data.toString() == address) {
         setOwnedBool(0);
-        console.log('Available!');
+        //console.log('Available!');
       }
   
     }
@@ -88,10 +88,10 @@ const TransferPage: NextPage = () => {
   
     React.useEffect(() => {
       setOwnedBool(3);
-      console.log('input : ', inputField);
+      //console.log('input : ', inputField);
       if (typeof inputField !== "undefined" && inputField !== "") {
         const bytes = setBytes((ethers.utils.formatBytes32String(inputField)).toString());
-        console.log(bytes);
+        //console.log(bytes);
       }
     }, [inputField]);
   
@@ -187,7 +187,7 @@ const TransferPage: NextPage = () => {
             
               <Button
                 size="large"
-                variant="contained"
+                variant="outlined"
                 color="secondary"
                 style={{ marginTop: 24, }}
                 className="white search"

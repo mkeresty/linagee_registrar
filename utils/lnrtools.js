@@ -17,5 +17,7 @@ let lnr = new LNR(ethers, signer);
         return
       })
 
+      //console.log("resolved is ", resolved)
+
     return(resolved)
 }

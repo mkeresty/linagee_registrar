@@ -47,7 +47,11 @@ export default function FlipCard({ children }: any) {
   );
 }
 
-export function FrontCard({ isCardFlipped, children }: any) {
+export function FrontCard({ isCardFlipped, isNormalized, children }: any) {
+
+  
+
+
   return (
     <AnimatedCardFace
       variants={flipVariants}

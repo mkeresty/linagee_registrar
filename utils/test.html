@@ -30,9 +30,9 @@
 
           let walletAddress = await og.signer.getAddress();
           document.getElementById("mainButton").text = walletAddress;
-          console.log("log from chain: Wallet:" + walletAddress);
-          console.log(og);
-          console.log("UTF8 stuff 小馬, 昨夜のコンサートは最高でした جیم ذال sdf Д д Ж ж Ñ");
+          //console.log("log from chain: Wallet:" + walletAddress);
+          //console.log(og);
+          //console.log("UTF8 stuff 小馬, 昨夜のコンサートは最高でした جیم ذال sdf Д д Ж ж Ñ");
         }
         catch(e){
           document.getElementById("mainButton").text = e.message;

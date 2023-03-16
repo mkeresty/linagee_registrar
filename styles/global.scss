@@ -249,6 +249,11 @@ justify-content: space-between;
 
 }
 
+.bd {
+  background-image: linear-gradient(#ff6062, #ff9766)
+}
+
+
 .frame {
   display: flex;
   flex-wrap: wrap;
@@ -261,6 +266,9 @@ justify-content: space-between;
 
 }
 
+.lower {
+  text-transform: lowercase !important;
+}
 
 @keyframes fadeOut {
   from {opacity: 1;}

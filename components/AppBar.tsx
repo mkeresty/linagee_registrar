@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -14,9 +15,16 @@ import MenuItem from '@mui/material/MenuItem';
 import router, { useRouter } from 'next/router';
 import Link from 'next/link';
 import AdbIcon from '@mui/icons-material/Adb';
-
+import { useAccount, useConnect, useDisconnect } from 'wagmi'
+import { InjectedConnector } from 'wagmi/connectors/injected'
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import LNR from '../utils/lnr-ethers-module-1.1.0.mjs';
+import { useUnmountEffect } from 'framer-motion';
+import { getProvider } from '@wagmi/core';
+import { useSigner } from 'wagmi';
+import { ethers } from 'ethers';
 
+import { resolve } from '../utils/lnrtools'
 
 const pages = [
   { name: "Mint", url: "/" },
@@ -27,6 +35,7 @@ const pages = [
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const ResponsiveAppBar = () => {
+  const [name, setName] = useState<string>("CONNECT")
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -44,6 +53,55 @@ const ResponsiveAppBar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const provider = getProvider({
+    chainId: 1,
+  })
+
+  const { address, isConnected } = useAccount()
+  const { connect } = useConnect({
+    connector: new InjectedConnector(),
+  })
+  const { disconnect } = useDisconnect()
+  const { data: signer, isError, isLoading } = useSigner()
+
+  const handleName = async(address: string) =>{
+    //console.log("siugner is ", signer)
+
+
+    if(!signer){
+      return
+    }
+    var lnr = new LNR(ethers, signer);
+
+    try{
+      var name = await lnr.lookupAddress(address);
+      if(name){
+        setName(name)
+      }
+      else{
+        setName(address.substring(0,6) + "..." + address.slice(address.length-4))
+      }
+    } 
+    catch(e){
+      setName(address.substring(0,6) + "..." + address.slice(address.length-4))
+    }
+  }
+
+
+
+  React.useEffect(()=>{
+
+    //console.log("address is ", address)
+    if(address){
+    const tryConnect = async () => {
+      await handleName(address);
+    }
+
+    tryConnect()
+  }
+
+  })
 
   return (
     <AppBar position="static" className="sketch-font">
@@ -150,7 +208,23 @@ const ResponsiveAppBar = () => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-                <ConnectButton />
+                {/* <ConnectButton /> */}
+                {!isConnected && (
+                <Button                 
+                className="lower"
+                size="large"
+                variant="outlined"
+                color="secondary"
+                 onClick={() => connect()}>Connect</Button>
+                )}
+                {isConnected && (
+                <Button         
+                className="lower"        
+                size="large"
+                variant="outlined"
+                color="secondary"
+                onClick={() => disconnect()}>{name}</Button>
+                )}
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"

@@ -36,7 +36,7 @@ const WebPage: NextPage = () => {
     const { data: signer, isError, isLoading } = useSigner();
     const account = useAccount({
         onConnect({ address, connector, isReconnected }) {
-          console.log('Connected', { address, connector, isReconnected })
+          //console.log('Connected', { address, connector, isReconnected })
         },
       });
     
@@ -60,7 +60,7 @@ const WebPage: NextPage = () => {
     const [resolved, setResolved] = React.useState<string>('test')
 
     const handleSearch = async () =>{
-        console.log(inputField)
+        //console.log(inputField)
 
         var resolvedname = await lnr.resolveName(inputField)
         .catch((e: { message: any; }) => {
@@ -68,7 +68,7 @@ const WebPage: NextPage = () => {
             return
           })
 
-        console.log(resolvedname)
+        //console.log(resolvedname)
 
         setResolved(resolvedname)
 

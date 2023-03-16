@@ -47,11 +47,11 @@ const Wrapper: NextPage = () => {
 
     const account = useAccount({
       onConnect({ address, connector, isReconnected }) {
-        console.log('Connected', { address, connector, isReconnected })
+        //console.log('Connected', { address, connector, isReconnected })
       },
     });
   
-    console.log(account);
+    //console.log(account);
 
     const wrapperConfig = {
         addressOrName: wrapperAddress,
@@ -83,27 +83,27 @@ const Wrapper: NextPage = () => {
 
 
 
-      //console.log("clicked");
+      ////console.log("clicked");
       const res = await refetch();
-      console.log(`owner is:`, res.data);
-      console.log(typeof res.data)
+      //console.log(`owner is:`, res.data);
+      //console.log(typeof res.data)
 
       const res2 = await refetch2();
-      console.log('is wrapper created?')
-      console.log(res2.data);
+      //console.log('is wrapper created?')
+      //console.log(res2.data);
 
       const res3 = await refetch3();
-      console.log('is name transferred?')
-      //console.log(res3.data.toString());
-      console.log(wrapperAddress);
+      //console.log('is name transferred?')
+      ////console.log(res3.data.toString());
+      //console.log(wrapperAddress);
 
       const res4 = await refetch4();
-      console.log(res4.data);
-      console.log('res4above');
+      //console.log(res4.data);
+      //console.log('res4above');
 
 
-      //console.log(res4.data?.BigNumber);
-      //console.log((ethers.BigNumber.from(res4.data)).toNumber());
+      ////console.log(res4.data?.BigNumber);
+      ////console.log((ethers.BigNumber.from(res4.data)).toNumber());
 
 
 
@@ -112,22 +112,22 @@ const Wrapper: NextPage = () => {
         setOwnedBool(6);
         //setWrapperQueue(1);
         //const isTransferred = true;
-        console.log('Wrapper owns');
+        //console.log('Wrapper owns');
       };
 
       if (typeof res4.data !== "undefined" && (ethers.BigNumber.from(res4.data)).toNumber() !== 0) {
 
-        // console.log('is name wrapped?')
-        // console.log(res4.data._hex);
+        // //console.log('is name wrapped?')
+        // //console.log(res4.data._hex);
 
 
         setWrappedMap((ethers.BigNumber.from(res4.data)).toNumber());
         //const isTransferred = true;
-        //console.log((ethers.BigNumber.from(res4.data)).toNumber());
+        ////console.log((ethers.BigNumber.from(res4.data)).toNumber());
 
         const res6 = await refetch6();
-        // console.log(res6.data);
-        // console.log('res6abovezzz');
+        // //console.log(res6.data);
+        // //console.log('res6abovezzz');
 
         // const { refetch: refetch7 } = useContractRead({
         //     ...wrapperConfig,
@@ -135,16 +135,16 @@ const Wrapper: NextPage = () => {
         //     args:[address, (ethers.BigNumber.from(res4.data)).toNumber()],
         // });
 
-        // console.log(refetch7);
-        // console.log('refetch7 above');
+        // //console.log(refetch7);
+        // //console.log('refetch7 above');
     
         // const fetchrs6 = async ()=>{
-        //     console.log('wrappppedmap', wrappedMap);
+        //     //console.log('wrappppedmap', wrappedMap);
         //       const res6 = await refetch6();
-        //       console.log('r6data');
-        //       console.log(res6);
-        //       //console.log(res4.data?.BigNumber);
-        //       //console.log((ethers.BigNumber.from(res4.data)).toNumber());
+        //       //console.log('r6data');
+        //       //console.log(res6);
+        //       ////console.log(res4.data?.BigNumber);
+        //       ////console.log((ethers.BigNumber.from(res4.data)).toNumber());
         
         //       if (typeof res6.data !== "undefined" && res6.data.toString() == address) {
         
@@ -162,43 +162,43 @@ const Wrapper: NextPage = () => {
         //setOwnedBool(5);
         setCreatedWrapper(1);
         //const isCreated = true;
-        console.log('Wrapper Created');
+        //console.log('Wrapper Created');
       };
   
 
       if (typeof res.data !== "undefined" && res.data.toString() !== address && res.data.toString() == "0x0000000000000000000000000000000000000000") {
         setOwner(res.data.toString());
         setOwnedBool(4);
-        console.log('Not owned');
+        //console.log('Not owned');
       };
   
       if (typeof res.data !== "undefined" && res.data.toString() !== wrapperAddress && res.data.toString() !== address && res.data.toString() !== "0x0000000000000000000000000000000000000000") {
         setOwner(res.data.toString());
         setOwnedBool(1);
-        console.log('Not available');
+        //console.log('Not available');
       };
       if (typeof res.data !== "undefined" && res.data.toString() == address) {
         setOwnedBool(0);
-        console.log('Available!');
+        //console.log('Available!');
 
         //createWrapper?.();
       };
 
-    //   console.log('checking..........')
+    //   //console.log('checking..........')
 
-    //   console.log('hm2', isConnected , !isWrapped , wrappedMap == 0 , (isTransferred || owned == 6) , (isCreated || createdWrapper == 1));
+    //   //console.log('hm2', isConnected , !isWrapped , wrappedMap == 0 , (isTransferred || owned == 6) , (isCreated || createdWrapper == 1));
 
-    //   console.log('ownedbool');
-    //   console.log(owned);
+    //   //console.log('ownedbool');
+    //   //console.log(owned);
 
-    //   console.log('isTransferred', isTransferred)
+    //   //console.log('isTransferred', isTransferred)
   
     }
   
     //----------STRING TO BYTES32------------------
   
     React.useEffect(() => {
-      console.log('input : ', inputField);
+      //console.log('input : ', inputField);
 
       setOwnedBool(3);
       setCreatedWrapper(0);
@@ -207,7 +207,7 @@ const Wrapper: NextPage = () => {
 
       if (typeof inputField !== "undefined" && inputField !== "") {
         const bytes = setBytes((ethers.utils.formatBytes32String(inputField)).toString());
-        console.log(bytes);
+        //console.log(bytes);
       }
     }, [inputField]);
   
@@ -265,7 +265,7 @@ const Wrapper: NextPage = () => {
         error: wrapError,
         } = useContractWrite(wrapConfig2);
 
-          //console.log(wrapError);
+          ////console.log(wrapError);
         
 //---------OTHER WRAP-----------
     const{data: wr2Data, write: contractWrap, isLoading: wr2Loading, isSuccess: wr2Started, error: wr2Error}  = useContractWrite({
@@ -325,32 +325,32 @@ const Wrapper: NextPage = () => {
 
         const isWrapped = wrSuccess;
 
-        // console.log('note');
+        // //console.log('note');
 
-        // console.log(inputBytes);
+        // //console.log(inputBytes);
 
-        // console.log(isConnected, !isWrapped, isTransferred, isCreated, owned );
+        // //console.log(isConnected, !isWrapped, isTransferred, isCreated, owned );
 
 
         React.useEffect(() => {
       
             if (isWrapped) {
               //const bytes = setBytes((ethers.utils.formatBytes32String(inputField)).toString());
-              //console.log(bytes);
+              ////console.log(bytes);
               const fetchrs4 = async ()=>{
                 const res4 = await refetch4();
 
-                console.log('bignumberdata');
+                //console.log('bignumberdata');
 
                 if (typeof res4.data !== "undefined" && (ethers.BigNumber.from(res4.data)).toNumber() !== 0) {
   
-                  console.log('is name wrapped?')
-                  console.log(res4.data._hex);
+                  //console.log('is name wrapped?')
+                  //console.log(res4.data._hex);
           
           
                   setWrappedMap((ethers.BigNumber.from(res4.data)).toNumber());
                   //const isTransferred = true;
-                  console.log('Wrapped!!');
+                  //console.log('Wrapped!!');
                 };
               }
               fetchrs4();
@@ -366,7 +366,7 @@ const Wrapper: NextPage = () => {
             if (wrappedMap !== 0){
                 const fetchrs6 = async ()=>{
                     const res6 = await refetch6();
-                    console.log('r66666666', res6.data);
+                    //console.log('r66666666', res6.data);
         
                         if (typeof address !== "undefined" && typeof res6.data !== "undefined" && res6.data.toString() == address) {
         
@@ -435,15 +435,15 @@ const Wrapper: NextPage = () => {
 //-----------TESTING-----------------------
 
 const check = ()=>{
-    console.log('wrapper clicked');
-    console.log(inputBytes)
+    //console.log('wrapper clicked');
+    //console.log(inputBytes)
     const hm = {}
-    console.log('hm', isConnected , !isWrapped , wrappedMap == 0 , (isTransferred || owned == 6) , (isCreated || createdWrapper == 1));
+    //console.log('hm', isConnected , !isWrapped , wrappedMap == 0 , (isTransferred || owned == 6) , (isCreated || createdWrapper == 1));
 
     //const letsWrap = wrap?.();
 
-    console.log('type');
-    console.log(typeof contractWrap);
+    //console.log('type');
+    //console.log(typeof contractWrap);
 
     if (typeof contractWrap !== "undefined"){
         contractWrap();
@@ -451,7 +451,7 @@ const check = ()=>{
 
     
 
-    console.log(wrapData ,wrapLoading, wrapStarted, wrapError);
+    //console.log(wrapData ,wrapLoading, wrapStarted, wrapError);
 
 }
 
@@ -465,7 +465,7 @@ const unwrapcheck = ()=>{
 
     
 
-    console.log(wrapData ,wrapLoading, wrapStarted, wrapError);
+    //console.log(wrapData ,wrapLoading, wrapStarted, wrapError);
 
 }
 
@@ -543,7 +543,7 @@ const unwrapcheck = ()=>{
             {owned !== 0 && owned !==6 &&(
             <Button
                 size="large"
-                variant="contained"
+                variant="outlined"
                 color="secondary"
                 style={{ marginTop: 24, }}
                 className="white search"
@@ -557,7 +557,7 @@ const unwrapcheck = ()=>{
             {isConnected && !isCreated && owned == 0 && createdWrapper !== 1 &&(
               <Button
                 size="large"
-                variant="contained"
+                variant="outlined"
                 color="success"
                 style={{ marginTop: 24, }}
                 disabled={createLoading || createStarted}
@@ -573,7 +573,7 @@ const unwrapcheck = ()=>{
             {isConnected && !isTransferred && (isCreated || createdWrapper == 1) && owned == 0 &&(
               <Button
                 size="large"
-                variant="contained"
+                variant="outlined"
                 color="success"
                 disabled={transferLoading || transferStarted}
                 style={{ marginTop: 24, }}
@@ -589,7 +589,7 @@ const unwrapcheck = ()=>{
             {isConnected && (!isWrapped || wrappedMap == 0 ) && (isTransferred || owned == 6) && (isCreated || createdWrapper == 1) &&(
               <Button
                 size="large"
-                variant="contained"
+                variant="outlined"
                 color="success"
                 disabled={wr2Loading || wr2Started || isWrapped}
                 style={{ marginTop: 24, }}
@@ -605,7 +605,7 @@ const unwrapcheck = ()=>{
         {isConnected && wrappedMap !== 0 && wrappedOwner == address &&(
               <Button
                 size="large"
-                variant="contained"
+                variant="outlined"
                 color="success"
                 disabled={uwr2Loading || uwr2Started || isUnwrapped}
                 style={{ marginTop: 24, }}
